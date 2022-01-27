@@ -10,6 +10,17 @@ const errorHandler = (err, req, res, next) => {
         error = new ErrorResponse(message, 404);
     }
 
+    if (err.code === 11000) {
+        const message = `Duplicated field value`;
+        error = new ErrorResponse(message, 400);
+    }
+
+    if (err.name === 'ValidationError') {
+        const message = Object.values(err.errors).map(value => value.message);
+        console.log({message})
+        error = new ErrorResponse(message, 400);
+    }
+
     res.status(error.statusCode || 500).json({
         success: false,
         error: error.message || 'Server Error',
