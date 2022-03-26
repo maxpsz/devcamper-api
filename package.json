@@ -1,33 +1,33 @@
 {
-  "name": "devcamper-api",
-  "version": "1.0.0",
-  "description": "DevCamper Backend API",
-  "main": "server.js",
-  "scripts": {
-    "start": "NODE_ENV=production node server",
-    "start-win": "SET NODE_ENV=production && node server",
-    "dev": "nodemon server"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/maxpsz/devcamper-api.git"
-  },
-  "author": "maxpsz",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/maxpsz/devcamper-api/issues"
-  },
-  "homepage": "https://github.com/maxpsz/devcamper-api#readme",
-  "dependencies": {
-    "colors": "^1.4.0",
-    "dotenv": "^12.0.3",
-    "express": "^4.17.2",
-    "mongoose": "^6.1.7",
-    "morgan": "^1.10.0",
-    "node-geocoder": "^4.0.0",
-    "slugify": "^1.6.5"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
-  }
+    "name": "devcamper-api",
+    "version": "1.0.0",
+    "description": "DevCamper Backend API",
+    "main": "server.js",
+    "scripts": {
+        "start": "NODE_ENV=production node server",
+        "start-win": "SET NODE_ENV=production && node server",
+        "dev": "nodemon server"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/maxpsz/devcamper-api.git"
+    },
+    "author": "maxpsz",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/maxpsz/devcamper-api/issues"
+    },
+    "homepage": "https://github.com/maxpsz/devcamper-api#readme",
+    "dependencies": {
+        "colors": "^1.4.0",
+        "dotenv": "^12.0.3",
+        "express": "^4.17.2",
+        "mongoose": "^6.1.7",
+        "morgan": "^1.10.0",
+        "node-geocoder": "^4.0.0",
+        "slugify": "^1.6.5"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.15"
+    }
 }

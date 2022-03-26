@@ -45,17 +45,22 @@ const getBootcamps = asyncHandler(async (req, res, next) => {
         pagination.next = {
             page: page + 1,
             limit
-        }
+        };
     }
 
     if (startIndex > 0) {
         pagination.prev = {
             page: page - 1,
             limit
-        }
+        };
     }
 
-    res.status(200).json({ success: true, count: bootcamps.length, pagination, data: bootcamps });
+    res.status(200).json({
+        success: true,
+        count: bootcamps.length,
+        pagination,
+        data: bootcamps
+    });
 });
 
 //@desc     Get single bootcamp
@@ -113,7 +118,9 @@ const getBootcampsInRadius = asyncHandler(async (req, res, next) => {
     const radius = distance / 3963;
 
     const bootcamps = await Bootcamp.find({
-        location: { $geoWithin: { $centerSphere: [[longitude, latitude], radius] } }
+        location: {
+            $geoWithin: { $centerSphere: [[longitude, latitude], radius] }
+        }
     });
 
     res.status(200).json({ success: true, count: bootcamps.length, data: bootcamps });
@@ -126,4 +133,4 @@ module.exports = {
     updateBootcamp,
     deleteBootcamp,
     getBootcampsInRadius
-}
+};
