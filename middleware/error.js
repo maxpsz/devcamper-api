@@ -3,10 +3,12 @@ const ErrorResponse = require('../utils/errorResponse');
 const errorHandler = (err, req, res, next) => {
     let error = { ...err };
 
-    console.log(err.stack.red);
+    error.message = err.message;
+
+    console.log(err);
 
     if (err.name === 'CastError') {
-        const message = `Resource not found with id of ${err.value}`;
+        const message = `Resource not found`;
         error = new ErrorResponse(message, 404);
     }
 
@@ -17,7 +19,6 @@ const errorHandler = (err, req, res, next) => {
 
     if (err.name === 'ValidationError') {
         const message = Object.values(err.errors).map((value) => value.message);
-        console.log({ message });
         error = new ErrorResponse(message, 400);
     }
 
