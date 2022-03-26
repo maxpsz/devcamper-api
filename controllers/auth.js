@@ -2,6 +2,8 @@ const User = require('../models/User');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 
+const { NODE_ENV, JWT_COOKIE_EXPIRE } = process.env;
+
 //@desc     Register user
 //@route    POST /api/v1/auth/register
 //@access   Public
@@ -10,9 +12,7 @@ const register = asyncHandler(async (req, res, next) => {
 
     const user = await User.create({ name, email, password, role });
 
-    const token = user.getSignedJwtToken();
-
-    res.status(200).json({ success: true, token });
+    sendTokenResponse(user, 200, res);
 });
 
 //@desc     Login user
@@ -31,10 +31,23 @@ const login = asyncHandler(async (req, res, next) => {
 
     if (!isMatch) return next(new ErrorResponse('Invalid credentials', 401));
 
+    sendTokenResponse(user, 200, res);
+});
+
+const sendTokenResponse = (user, statusCode, res) => {
     const token = user.getSignedJwtToken();
 
-    res.status(200).json({ success: true, token });
-});
+    const options = {
+        expires: new Date(Date.now() + JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
+        secure: NODE_ENV === 'production',
+        httpOnly: true
+    };
+
+    res.status(statusCode).cookie('token', token, options).json({
+        success: true,
+        token
+    });
+};
 
 module.exports = {
     register,
