@@ -24,11 +24,21 @@ const protect = asyncHandler(async (req, res, next) => {
         const decoded = jwt.verify(token, JWT_SECRET);
         req.user = await User.findById(decoded.id);
         next();
-    } catch (error) {
+    } catch (err) {
         return next(new ErrorResponse('Not authorized to access this route', 401));
     }
 });
 
+const authorize = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return next(new ErrorResponse(`User role ${req.user.role} is not authorized to access this route`, 401));
+        }
+        next();
+    };
+};
+
 module.exports = {
-    protect
+    protect,
+    authorize
 };
