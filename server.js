@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(mongoSanitize());
 app.use(fileUpload());
 app.use(hpp());
-app.use(cors);
+app.use(cors());
 
 const limiter = rateLimit({
     windowMs: 10 * 60 * 1000,
