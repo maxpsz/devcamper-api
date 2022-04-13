@@ -3,6 +3,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const xss = require('xss-clean');
 const fileUpload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const errorHandler = require('./middleware/error');
@@ -23,6 +25,8 @@ const reviews = require('./routes/reviews');
 const app = express();
 
 app.use(express.json());
+app.use(helmet());
+app.use(xss());
 app.use(cookieParser());
 app.use(mongoSanitize());
 app.use(fileUpload());
