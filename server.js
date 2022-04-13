@@ -5,6 +5,9 @@ const morgan = require('morgan');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
+const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const errorHandler = require('./middleware/error');
@@ -30,6 +33,15 @@ app.use(xss());
 app.use(cookieParser());
 app.use(mongoSanitize());
 app.use(fileUpload());
+app.use(hpp());
+app.use(cors);
+
+const limiter = rateLimit({
+    windowMs: 10 * 60 * 1000,
+    max: 100
+});
+
+app.use(limiter);
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
