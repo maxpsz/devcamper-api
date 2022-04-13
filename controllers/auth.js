@@ -48,6 +48,21 @@ const getMe = asyncHandler(async (req, res, next) => {
     });
 });
 
+//@desc     Log user out / clear cookie
+//@route    GET /api/v1/auth/logout
+//@access   Private
+const logout = asyncHandler(async (req, res, next) => {
+    res.cookie('cookie', 'none', {
+        expires: new Date(Date.now() + 10),
+        httpOnly: true
+    })
+
+    res.status(200).json({
+        success: true,
+        data: {}
+    });
+});
+
 //@desc     Update user details
 //@route    PUT /api/v1/auth/updateuserdetails
 //@access   Private
@@ -160,6 +175,7 @@ module.exports = {
     register,
     login,
     getMe,
+    logout,
     forgotPassword,
     resetPassword,
     updateDetails,
